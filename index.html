@@ -44,7 +44,7 @@
    <div style="width: 100%;height: 3px;background-color: black;"></div><br>
 
    <label >Acceseaza un portofoliu:</label><br><br>
-   <label >Id portofoliu: </label><input type="text" name="" id="id2">
+   <label >Id portofoliu: </label><input type="number" name="" id="id2">
    <input type="submit" onclick="afis()" value="Submit"><br><br>
 
 
@@ -66,10 +66,12 @@ function addport(){
 nume=document.getElementById('nume_port').value;
 document.getElementById('nume_port').value='';
 var id = Math.floor(Math.random() * (999999999 - 1000 ) ) + 1000;
+idx=id;
+
 if (used == false){    used=true;
 
 var qrcode = new QRCode("qrcode",
-        id);}
+        idx);}
 document.getElementById('id_out').innerHTML='ID: '+ id;
 
 var id='ID'+id;
@@ -89,10 +91,12 @@ fetch('https://getpantry.cloud/apiv1/pantry/e00ace71-7e82-4115-bf27-df73d084062a
 
 function addelem(){
 var id=document.getElementById('id').value;
+idx=id;
+
 if (used == false){    used=true;
 
 var qrcode = new QRCode("qrcode",
-        id);}
+        idx);}
 id='ID'+id;
 document.getElementById('id').value='';
 
@@ -143,15 +147,15 @@ fetch('https://getpantry.cloud/apiv1/pantry/e00ace71-7e82-4115-bf27-df73d084062a
 }
 
 function afis(){
-    var qrcode = new QRCode("qrcode",
-        id);
+
 let out='';
     var id=document.getElementById('id2').value;
+    idx=id;
 id='ID'+id;
 if (used == false){
     used=true;
 var qrcode = new QRCode("qrcode",
-        id);}
+        idx);}
 
     fetch('https://getpantry.cloud/apiv1/pantry/e00ace71-7e82-4115-bf27-df73d084062a/basket/newBasket80', {
    headers: {
