@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PortOnline</title>
+    <script src=
+    "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+        </script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style> body, header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+        p,h1,h2,label{font-family: Arial, Helvetica, sans-serif;}
+    </style>
+</head>
+<body>
+    <center><h1>PortOnline</h1>
+        <div style="width: 100%;height: 3px;background-color: black;"></div><br>
+        <label>Scaneaza un cod QR:</label><br><br>
+        <div id="qr-reader" style="width: 600px"></div><br><br>
+        <div style="width: 100%;height: 3px;background-color: black;"></div><br>
+
+        <label>Codul QR al portofoliului:</label>
+        <div id="qrcode" style="height: 20%;width: 200px;"></div><br><br>
+
+        <div style="width: 100%;height: 3px;background-color: black;"></div><br>
+
+        <label >Adauga un element la un portofoliu existent:</label><br><br>
+    <label >Id portofoliu: </label><input type="number" name="" id="id">
+    <label >Nume element: </label><input type="text" name="" id="nume_elem">
+    <label >Link: </label><input type="text" name="" id="link" >
+   <input type="submit" onclick="addelem()" value="Submit"><br><br>
+   <div style="width: 100%;height: 3px;background-color: black;"></div><br>
+
+   <label >Creeaza un portofoliu nou:</label><br><br>
+   <label >Nume portofoliu: </label><input type="text" name="" id="nume_port">
+   <input type="submit" onclick="addport()" value="Submit"><br><br>
+
+   <div style="width: 100%;height: 3px;background-color: black;"></div><br>
+
+   <label >Acceseaza un portofoliu:</label><br><br>
+   <label >Id portofoliu: </label><input type="text" name="" id="id2">
+   <input type="submit" onclick="afis()" value="Submit"><br><br>
+
+
+   <div style="width: 100%;height: 3px;background-color: black;"></div>
+<p style="font-size: 5rem;" id="id_out"></p>
+<p id="out" style="font-size: 4rem;"></p>
+</center>
+<script>
+    used=false;
+    function onScanSuccess(decodedText, decodedResult) {
+     document.getElementById('id2').value=decodedText;
+     afis()
+}
+var html5QrcodeScanner = new Html5QrcodeScanner(
+  "qr-reader", { fps: 10, qrbox: 250 });
+html5QrcodeScanner.render(onScanSuccess);
+
+function addport(){
+nume=document.getElementById('nume_port').value;
+document.getElementById('nume_port').value='';
+var id = Math.floor(Math.random() * (999999999 - 1000 ) ) + 1000;
+if (used == false){    used=true;
+
+var qrcode = new QRCode("qrcode",
+        id);}
+document.getElementById('id_out').innerHTML='ID: '+ id;
+
+var id='ID'+id;
+
+        
+
+
+fetch('https://getpantry.cloud/apiv1/pantry/e00ace71-7e82-4115-bf27-df73d084062a/basket/newBasket80', {
+    method: 'PUT',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ [id]: {nume_port:nume, no:0}})
+})  
+}
+
+function addelem(){
+var id=document.getElementById('id').value;
+if (used == false){    used=true;
+
+var qrcode = new QRCode("qrcode",
+        id);}
+id='ID'+id;
+document.getElementById('id').value='';
+
+
+var nume_elem=document.getElementById('nume_elem').value;
+document.getElementById('nume_elem').value='';
+
+var link=document.getElementById('link').value;
+document.getElementById('link').value='';
+
+go= '<a href="'+link+'">'+nume_elem+'</a><br><br>';
+
+fetch('https://getpantry.cloud/apiv1/pantry/e00ace71-7e82-4115-bf27-df73d084062a/basket/newBasket80', {
+   headers: {
+      'Accept': 'application/json'
+   }
+})
+   .then(response => response.text())
+   .then(text => {nr=JSON.parse(text)[id].no;nr2=nr+1;
+    nume=JSON.parse(text)[id].nume_port;
+
+    fetch('https://getpantry.cloud/apiv1/pantry/e00ace71-7e82-4115-bf27-df73d084062a/basket/newBasket80', {
+    method: 'PUT',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ [id]: {nume_port:nume,
+         no:nr2,
+          data: {[nr2]:go} 
+        }
+    })
+}) 
+
+
+
+
+
+
+
+})
+
+
+
+
+ 
+
+}
+
+function afis(){
+    var qrcode = new QRCode("qrcode",
+        id);
+let out='';
+    var id=document.getElementById('id2').value;
+id='ID'+id;
+if (used == false){
+    used=true;
+var qrcode = new QRCode("qrcode",
+        id);}
+
+    fetch('https://getpantry.cloud/apiv1/pantry/e00ace71-7e82-4115-bf27-df73d084062a/basket/newBasket80', {
+   headers: {
+      'Accept': 'application/json'
+   }
+})
+   .then(response => response.text())
+   .then(text => {
+    nr=JSON.parse(text)[id].no;
+    document.getElementById('id_out').innerHTML=JSON.parse(text)[id].nume_port;
+    for(i=1; i<=nr; i++){
+
+out=out+JSON.parse(text)[id].data[i];
+document.getElementById('out').innerHTML=out;
+    }
+
+})
+}
+</script>
+</body>
+</html>
