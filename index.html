@@ -55,12 +55,21 @@
 </p>
 
 </center>
-<script>
+<script> 
+ const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const paraId = urlParams.get('id');
+    if(paraId){
+      document.getElementById('id2').value=paraId;
+      document.getElementById('id').value=paraId;
+
+      afis()
+    }
+
+
     used=false;
     function onScanSuccess(decodedText, decodedResult) {
-     document.getElementById('id2').value=decodedText;
-     document.getElementById('id').value=decodedText;
-     afis()
+        window.open(decodedText, '_self')
 }
 var html5QrcodeScanner = new Html5QrcodeScanner(
   "qr-reader", { fps: 10, qrbox: 250 });
@@ -70,13 +79,13 @@ function addport(){
 nume=document.getElementById('nume_port').value;
 document.getElementById('nume_port').value='';
 var id = Math.floor(Math.random() * (999999999 - 1000 ) ) + 1000;
-idx=id;
+idx='https://roastro.github.io/PortOnline/?id='+id;
 
 if (used == false){    used=true;
 
 var qrcode = new QRCode("qrcode",
         idx);}
-document.getElementById('id_out').innerHTML='ID: '+ id;
+document.getElementById('id_out').innerHTML=idx;
 
 var id='ID'+id;
 
@@ -95,7 +104,8 @@ fetch('https://getpantry.cloud/apiv1/pantry/e00ace71-7e82-4115-bf27-df73d084062a
 
 function addelem(){
 var id=document.getElementById('id').value;
-idx=id;
+idx='https://roastro.github.io/PortOnline/?id='+id;
+
 
 if (used == false){    used=true;
 
