@@ -55,7 +55,9 @@
 </p>
 
 </center>
-<script> 
+<script>
+     utilizat=false;
+
  const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const paraId = urlParams.get('id');
@@ -67,7 +69,6 @@
     }
 
 
-    utilizat=false;
     function onScanSuccess(decodedText, decodedResult) {
         window.open(decodedText, '_self');
 }
@@ -81,7 +82,7 @@ document.getElementById('nume_port').value='';
 var id = Math.floor(Math.random() * (999999999 - 1000 ) ) + 1000;
 idx='https://roastro.github.io/PortOnline/?id='+id;
 
-if (utilizat == false){    utilizat=true;
+if (!utilizat){    utilizat=true;
 
 var qrcode = new QRCode("qrcode",
         idx);}
