@@ -67,7 +67,7 @@
     }
 
 
-    used=false;
+    utilizat=false;
     function onScanSuccess(decodedText, decodedResult) {
         window.open(decodedText, '_self');
 }
@@ -81,7 +81,7 @@ document.getElementById('nume_port').value='';
 var id = Math.floor(Math.random() * (999999999 - 1000 ) ) + 1000;
 idx='https://roastro.github.io/PortOnline/?id='+id;
 
-if (used == false){    used=true;
+if (utilizat == false){    utilizat=true;
 
 var qrcode = new QRCode("qrcode",
         idx);}
@@ -107,7 +107,7 @@ var id=document.getElementById('id').value;
 idx='https://roastro.github.io/PortOnline/?id='+id;
 
 
-if (used == false){    used=true;
+if (utilizat == false){    utilizat=true;
 
 var qrcode = new QRCode("qrcode",
         idx);}
@@ -165,8 +165,8 @@ let out='';
     var id=document.getElementById('id2').value;
     idx='https://roastro.github.io/PortOnline/?id='+id;
 id='ID'+id;
-if (used == false){
-    used=true;
+if (utilizat == false){
+    utilizat=true;
 var qrcode = new QRCode("qrcode",
         idx);}
 
