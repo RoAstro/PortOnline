@@ -94,7 +94,7 @@ var id='ID'+id;
         
 
 
-fetch('https://getpantry.cloud/apiv1/pantry/e00ace71-7e82-4115-bf27-df73d084062a/basket/newBasket80', {
+fetch('https://getpantry.cloud/apiv1/pantry/1a8daeb8-f35f-4b2d-9325-d11d8ff6ca98/basket/newBasket80', {
     method: 'PUT',
     headers: {
         'Accept': 'application/json',
@@ -124,7 +124,7 @@ document.getElementById('link').value='';
 
 go=`<div onclick='window.open(" ${link} ")' style='font-size: 3rem;width: 50%;border-color: black;border-style: solid;border-radius: 10px;'> ${nume_elem} </div><br><br>`;
 
-fetch('https://getpantry.cloud/apiv1/pantry/e00ace71-7e82-4115-bf27-df73d084062a/basket/newBasket80', {
+fetch('https://getpantry.cloud/apiv1/pantry/1a8daeb8-f35f-4b2d-9325-d11d8ff6ca98/basket/newBasket80', {
    headers: {
       'Accept': 'application/json'
    }
@@ -133,7 +133,7 @@ fetch('https://getpantry.cloud/apiv1/pantry/e00ace71-7e82-4115-bf27-df73d084062a
    .then(text => {nr=JSON.parse(text)[id].no;nr2=nr+1;
     nume=JSON.parse(text)[id].nume_port;
 
-    fetch('https://getpantry.cloud/apiv1/pantry/e00ace71-7e82-4115-bf27-df73d084062a/basket/newBasket80', {
+    fetch('https://getpantry.cloud/apiv1/pantry/1a8daeb8-f35f-4b2d-9325-d11d8ff6ca98/basket/newBasket80', {
     method: 'PUT',
     headers: {
         'Accept': 'application/json',
